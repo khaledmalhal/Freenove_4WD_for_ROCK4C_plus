@@ -26,7 +26,7 @@ class PCA9685:
   __ALLLED_OFF_H       = 0xFD
 
   def __init__(self, address=0x40, debug=False):
-    self.bus = smbus.SMBus(1)
+    self.bus = smbus.SMBus(7)
     self.address = address
     self.debug = debug
     self.write(self.__MODE1, 0x00)

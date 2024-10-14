@@ -1,5 +1,5 @@
 from PCA9685 import PCA9685
-
+import time
 
 class Servo:
     def __init__(self):
@@ -10,6 +10,8 @@ class Servo:
 
     def setServoPwm(self, channel, angle, error=10):
         angle = int(angle)
+        if angle < 65:
+            angle = 65
         if channel == '0':
             self.PwmServo.setServoPulse(8, 2500 - int((angle + error) / 0.09))
         elif channel == '1':
@@ -38,7 +40,19 @@ if __name__ == '__main__':
     while True:
         try:
             pwm.setServoPwm('0', 90)
-            pwm.setServoPwm('1', 90)
+            for i in range(65, 180):
+                pwm.setServoPwm('1', i)
+                time.sleep(0.1)
+                print(i)
+            # time.sleep(1)
+            # pwm.setServoPwm('0', 0)
+            # pwm.setServoPwm('1', 0)
+            # time.sleep(1)
+            # pwm.setServoPwm('0', 150)
+            # pwm.setServoPwm('1', 150)
+            # time.sleep(1)
         except KeyboardInterrupt:
+            pwm.setServoPwm('0', 90)
+            pwm.setServoPwm('1', 90)
             print("\nEnd of program")
             break
