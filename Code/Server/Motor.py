@@ -2,7 +2,8 @@ import math
 from PCA9685 import PCA9685
 from ADC import *
 import time
-
+import os
+import inspect
 
 class Motor:
     def __init__(self):
@@ -37,44 +38,44 @@ class Motor:
 
     def left_Upper_Wheel(self, duty):
         if duty > 0:
-            self.pwm.setMotorPwm(0, 0)
-            self.pwm.setMotorPwm(1, duty)
-        elif duty < 0:
             self.pwm.setMotorPwm(1, 0)
-            self.pwm.setMotorPwm(0, abs(duty))
+            self.pwm.setMotorPwm(0, duty)
+        elif duty < 0:
+            self.pwm.setMotorPwm(0, 0)
+            self.pwm.setMotorPwm(1, abs(duty))
         else:
             self.pwm.setMotorPwm(0, 4095)
             self.pwm.setMotorPwm(1, 4095)
 
     def left_Lower_Wheel(self, duty):
         if duty > 0:
-            self.pwm.setMotorPwm(3, 0)
-            self.pwm.setMotorPwm(2, duty)
-        elif duty < 0:
             self.pwm.setMotorPwm(2, 0)
-            self.pwm.setMotorPwm(3, abs(duty))
+            self.pwm.setMotorPwm(3, duty)
+        elif duty < 0:
+            self.pwm.setMotorPwm(3, 0)
+            self.pwm.setMotorPwm(2, abs(duty))
         else:
             self.pwm.setMotorPwm(2, 4095)
             self.pwm.setMotorPwm(3, 4095)
 
     def right_Upper_Wheel(self, duty):
         if duty > 0:
-            self.pwm.setMotorPwm(6, 0)
-            self.pwm.setMotorPwm(7, duty)
-        elif duty < 0:
             self.pwm.setMotorPwm(7, 0)
-            self.pwm.setMotorPwm(6, abs(duty))
+            self.pwm.setMotorPwm(6, duty)
+        elif duty < 0:
+            self.pwm.setMotorPwm(6, 0)
+            self.pwm.setMotorPwm(7, abs(duty))
         else:
             self.pwm.setMotorPwm(6, 4095)
             self.pwm.setMotorPwm(7, 4095)
 
     def right_Lower_Wheel(self, duty):
         if duty > 0:
-            self.pwm.setMotorPwm(4, 0)
-            self.pwm.setMotorPwm(5, duty)
-        elif duty < 0:
             self.pwm.setMotorPwm(5, 0)
-            self.pwm.setMotorPwm(4, abs(duty))
+            self.pwm.setMotorPwm(4, duty)
+        elif duty < 0:
+            self.pwm.setMotorPwm(4, 0)
+            self.pwm.setMotorPwm(5, abs(duty))
         else:
             self.pwm.setMotorPwm(4, 4095)
             self.pwm.setMotorPwm(5, 4095)
@@ -111,13 +112,13 @@ PWM = Motor()
 
 def loop():
     PWM.setMotorModel(2000, 2000, 2000, 2000)  # Forward
-    time.sleep(3)
+    time.sleep(1.5)
     PWM.setMotorModel(-2000, -2000, -2000, -2000)  # Back
-    time.sleep(3)
+    time.sleep(1.5)
     PWM.setMotorModel(-500, -500, 2000, 2000)  # Left
-    time.sleep(3)
+    time.sleep(1.5)
     PWM.setMotorModel(2000, 2000, -500, -500)  # Right
-    time.sleep(3)
+    time.sleep(1.5)
     PWM.setMotorModel(0, 0, 0, 0)  # Stop
 
 
