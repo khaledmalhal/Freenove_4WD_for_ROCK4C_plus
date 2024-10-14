@@ -1,6 +1,7 @@
 import time
-from Led import *
-led=Led()
+# from Led import *
+# led=Led()
+
 def test_Led():
     try:
         led.ledIndex(0x01,255,0,0)      #Red
@@ -64,7 +65,7 @@ def test_Motor():
         print ("\nEnd of program")
 
 
-from Ultrasonic import *
+from UltrasonicRock import *
 ultrasonic=Ultrasonic()                
 def test_Ultrasonic():
     try:
@@ -82,8 +83,8 @@ def car_Rotate():
     except KeyboardInterrupt:
         print ("\nEnd of program")
 
-from Line_Tracking import *
-line=Line_Tracking()
+# from Line_Tracking import *
+# line=Line_Tracking()
 def test_Infrared():
     try:
         while True:
