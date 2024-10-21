@@ -1,4 +1,5 @@
 import serial
+from threading import Thread
 from Line_Tracking import *
 
 line = Line_Tracking()
@@ -8,6 +9,8 @@ all_cards=[]
 def main():
     ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
     ser.reset_input_buffer()
+    thread = Thread(target=line.run())
+    thread.start()
     try: 
         while True:
             if   line.IR01_GPIO.read() != True and line.IR02_GPIO.read() == True and line.IR03_GPIO.read() != True:
@@ -29,13 +32,14 @@ def main():
                     print("Not a card detected, probably.")
 
     except KeyboardInterrupt:
+        PWM.setMotorModel(0,0,0,0)
         line.IR01_GPIO.close()
         line.IR02_GPIO.close()
         line.IR03_GPIO.close()
         with open('all_cards.txt', 'w') as f:
             for card in all_cards:
                 f.write(' '.join(card)+'\n')
-        print ("\nEnd of program")
+        print("\nEnd of program")
 
 
 if __name__ == '__main__':
