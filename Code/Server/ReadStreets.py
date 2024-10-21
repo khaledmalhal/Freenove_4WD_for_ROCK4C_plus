@@ -2,23 +2,24 @@ import serial
 from threading import Thread
 from Line_Tracking import *
 
-line = Line_Tracking()
-card = ""
-all_cards=[]
-
 def main():
+    line = Line_Tracking()
+    all_cards=[]
+    card = ""
     ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
     ser.reset_input_buffer()
-    thread = Thread(target=line.run())
-    thread.start()
-    try: 
+    try:
+        thread = Thread(target=line.run)
+        thread.start()
+        print("Started thread")
+        print("Started reading")
         while True:
-            if   line.IR01_GPIO.read() != True and line.IR02_GPIO.read() == True and line.IR03_GPIO.read() != True:
-                print ('Middle')
-            elif line.IR01_GPIO.read() != True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() == True:
-                print ('Right')
-            elif line.IR01_GPIO.read() == True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() != True:
-                print ('Left')
+            # if   line.IR01_GPIO.read() != True and line.IR02_GPIO.read() == True and line.IR03_GPIO.read() != True:
+            #     print ('Middle')
+            # elif line.IR01_GPIO.read() != True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() == True:
+            #     print ('Right')
+            # elif line.IR01_GPIO.read() == True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() != True:
+            #     print ('Left')
             if ser.in_waiting > 0:
                 ser_line = ser.readline().decode('utf-8').rstrip()
                 try:
