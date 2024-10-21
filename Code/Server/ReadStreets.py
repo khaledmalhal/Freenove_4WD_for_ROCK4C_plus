@@ -17,9 +17,9 @@ def main():
             elif line.IR01_GPIO.read() == True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() != True:
                 print ('Left')
             if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8').rstrip()
+                ser_line = ser.readline().decode('utf-8').rstrip()
                 try:
-                    new_card = line.split(": ")[1]
+                    new_card = ser_line.split(": ")[1]
                     if new_card != card:
                         card = new_card
                         if card not in all_cards:
