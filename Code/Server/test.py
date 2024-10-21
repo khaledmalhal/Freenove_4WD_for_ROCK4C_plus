@@ -65,7 +65,7 @@ def test_Motor():
         print ("\nEnd of program")
 
 
-from UltrasonicRock import *
+from Ultrasonic import *
 ultrasonic=Ultrasonic()                
 def test_Ultrasonic():
     try:
@@ -74,6 +74,8 @@ def test_Ultrasonic():
             print ("Obstacle distance is "+str(data)+"CM")
             time.sleep(1)
     except KeyboardInterrupt:
+        ultrasonic.echo_GPIO.close()
+        ultrasonic.trig_GPIO.close()
         print ("\nEnd of program")
 
 def car_Rotate():
@@ -83,18 +85,21 @@ def car_Rotate():
     except KeyboardInterrupt:
         print ("\nEnd of program")
 
-# from Line_Tracking import *
-# line=Line_Tracking()
+from Line_Tracking import *
+line=Line_Tracking()
 def test_Infrared():
     try:
         while True:
-            if GPIO.input(line.IR01)!=True and GPIO.input(line.IR02)==True and GPIO.input(line.IR03)!=True:
+            if   line.IR01_GPIO.read() != True and line.IR02_GPIO.read() == True and line.IR03_GPIO.read() != True:
                 print ('Middle')
-            elif GPIO.input(line.IR01)!=True and GPIO.input(line.IR02)!=True and GPIO.input(line.IR03)==True:
+            elif line.IR01_GPIO.read() != True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() == True:
                 print ('Right')
-            elif GPIO.input(line.IR01)==True and GPIO.input(line.IR02)!=True and GPIO.input(line.IR03)!=True:
+            elif line.IR01_GPIO.read() == True and line.IR02_GPIO.read() != True and line.IR03_GPIO.read() != True:
                 print ('Left')
     except KeyboardInterrupt:
+        line.IR01_GPIO.close()
+        line.IR02_GPIO.close()
+        line.IR03_GPIO.close()
         print ("\nEnd of program")
 
 
@@ -143,16 +148,16 @@ def test_Buzzer():
     try:
         buzzer.run('1')
         time.sleep(1)
-        print ("1S")
+        print("1S")
         time.sleep(1)
-        print ("2S")
+        print("2S")
         time.sleep(1)
-        print ("3S")
+        print("3S")
         buzzer.run('0')
-        print ("\nEnd of program")
+        print("\nEnd of program")
     except KeyboardInterrupt:
         buzzer.run('0')
-        print ("\nEnd of program")
+        print("\nEnd of program")
            
 # Main program logic follows:
 if __name__ == '__main__':
@@ -178,7 +183,3 @@ if __name__ == '__main__':
         test_Buzzer()  
     elif sys.argv[1] == 'Rotate':
         car_Rotate()
-        
-        
-        
-        
