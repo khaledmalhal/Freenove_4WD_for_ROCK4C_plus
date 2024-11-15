@@ -11,7 +11,6 @@ class Line_Tracking:
         self.IR02_GPIO = GPIO(self.IR02, 'in')
         self.IR03_GPIO = GPIO(self.IR03, 'in')
     def run(self):
-        print('Run Line Tracking')
         while True:
             self.LMR=0x00
             if self.IR01_GPIO.read() != True:
@@ -20,7 +19,7 @@ class Line_Tracking:
                 self.LMR=(self.LMR | 2)
             if self.IR03_GPIO.read() != True:
                 self.LMR=(self.LMR | 1)
-            print('Running motor')
+
             if self.LMR==2:
                 # Move forward
                 PWM.setMotorModel(800,800,800,800)
